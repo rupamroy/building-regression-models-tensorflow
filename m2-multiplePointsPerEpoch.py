@@ -51,13 +51,16 @@ cost = tf.reduce_mean(tf.square(y - yPred))
 cost_hist = tf.summary.histogram("cost", cost)
 
 train_step_constant = tf.train.GradientDescentOptimizer(0.1).minimize(cost)
-train_step_ada = tf.train.AdagradOptimizer(1).minimize(cost) # this will be worse tan GradeinetDescent
-train_step_ftrl = tf.train.FtrlOptimizer(1).minimize(cost) # this will be no better tan GradeinetDescent
+train_step_ada = tf.train.AdagradOptimizer(1).minimize(
+    cost)  # this will be worse tan GradeinetDescent
+train_step_ftrl = tf.train.FtrlOptimizer(1).minimize(
+    cost)  # this will be no better tan GradeinetDescent
 
 # set up a method to perform the actual training, Allows  us to
 # modify the optimizer used and also the number of steps
 # in the training
 dataset_size = len(xData)
+
 
 def trainWithMultiplePointsPerEpoch(steps, train_step, batch_size):
     init = tf.global_variables_initializer()
@@ -72,8 +75,9 @@ def trainWithMultiplePointsPerEpoch(steps, train_step, batch_size):
             if dataset_size == batch_size:
                 batch_start_idx = 0
             elif dataset_size < batch_size:
-                raise ValueError("dataset size {} must be breater than batch_size {}}".format(dataset_size, batch_size))
-            else: 
+                raise ValueError("dataset size {} must be breater than batch_size {}}".format(
+                    dataset_size, batch_size))
+            else:
                 batch_start_idx = (i * batch_size) % dataset_size
 
             batch_end_idx = batch_start_idx + batch_size
@@ -82,9 +86,13 @@ def trainWithMultiplePointsPerEpoch(steps, train_step, batch_size):
             batch_ys = yData[batch_start_idx: batch_end_idx]
 
             feed = {
-                x: batch_xs.reshape([-1,1]),
-                y: batch_ys.reshape([-1,1])
+                x: batch_xs.reshape([-1, 1]),
+                y: batch_ys.reshape([-1, 1])
             }
+            # Here since the bacth size is sent as the length of the whole xData
+            # so the whole dataset is run in every epoch, BUt the batch size parament can be used to
+            # reduce the size if desired
+           
 
             sess.run(train_step, feed_dict=feed)
 

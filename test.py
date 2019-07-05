@@ -1,10 +1,14 @@
-import numpy as np
+# import numpy as np
 
-from returns_data import read_goog_sp500_dataframe
+# from returns_data import read_goog_sp500_dataframe
 
-returns = read_goog_sp500_dataframe()
+# returns = read_goog_sp500_dataframe()
 
-returns["Intercept"] = 1
+# returns["Intercept"] = 1
 
-print(np.array(returns[["SP500", 'Intercept']][1:-1]))
+# print(np.array(returns[["SP500", 'Intercept']][1:-1]))
 
+import tensorflow as tf 
+
+
+print(tf.zeros([1]))

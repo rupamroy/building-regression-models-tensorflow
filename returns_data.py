@@ -6,7 +6,7 @@ def read_goog_sp500_dataframe():
     googFile = 'stock_data/GOOG.csv'
     spFile = 'stock_data/SP_500.csv'
 
-
+    #Get the Date and Close value of the stocks for google and S&P
     goog = pd.read_csv(googFile, sep=",", usecols=[0,5], names=['Date', 'Goog'], header=0) # returns pandas dataframe object
     sp = pd.read_csv(spFile, sep=",", usecols=[0,5], names=['Date', 'SP500'], header=0)
 
